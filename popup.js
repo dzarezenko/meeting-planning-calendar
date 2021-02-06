@@ -16,7 +16,16 @@ window.onclick = function (event) {
    }
 }
 
+events = [];
+for (let i = 0; i <= 9; i++) {
+  events.push([]);
+  for (let j = 0; j <= 5; j++) {
+    events[i].push(null);
+  }
+}
+
 function changeTable() {
+  //console.log(events);
 
    let e = document.getElementById("col");
    let cl = e.options[e.selectedIndex].value;
@@ -26,23 +35,26 @@ function changeTable() {
    let trs = tabs.getElementsByTagName("tr")[0];
    let text = document.getElementById('tblText').value;
 
-   
-
-   
-
    for (let i = 0, row; row = tabs.rows[i]; i++) {
        for (let j = 0, col; col = row.cells[j]; j++) {
-               if (trs.cells[cl].id !== 'unique_id') {
+                //console.log(i, j, events[i][j]);
+                if (events[rw][cl] == null) {
                    trs = tabs.getElementsByTagName("tr")[rw];
-                   trs.cells[cl].innerHTML = text;
-                   trs.cells[cl].id = "unique_id";
-                   trs.cells[cl].style.backgroundColor = "#d3f5b4";  
 
-                   
-                  }else if (trs.cells[cl].id === 'unique_id') {
-                     console.log('неможливо записати');
-                  } 
-                  modal.style.display = "none";
+                   let event = {
+                     id: `${rw}-${cl}`,
+                     text: text,
+                     name: "...",
+                   }
+
+                   events[rw][cl] = event;
+
+                   trs.cells[cl].innerHTML = text;
+                   trs.cells[cl].style.backgroundColor = "#d3f5b4";
+                } else if (i == rw && j == cl) {
+                    console.log('неможливо записати');
+                } 
+                modal.style.display = "none";
                
          }
    }
